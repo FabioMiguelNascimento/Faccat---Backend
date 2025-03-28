@@ -1,0 +1,23 @@
+C4Container
+title Sistema de contexto para um aplicação escolar
+
+Person(Professor, "Professor", "Professor dos alunos")
+Person(Aluno, "Aluno","Assiste as aulas e envia tarefas")
+Person(Administracao, "Administração", "HR, Diretoria e afins")
+System(Sistema, "Sistema de aplicação do colégio", "Permite que os usuarios vejam informações e participem das aulas. Registrando assistindo e compartilhando")
+
+Enterprise_Boundary(b1, "Aplicação") {
+
+    System(front, "Sistema de frontend [React, ReactRouter]", "Aplicação frontend do sistema")
+    System(back, "Sistema de backend [NodeJs, Express]", "Backend do sistema")
+    SystemDb(db, "Banco de dados [Sql]", "Banco de dados do sistema")
+}
+
+Rel(back, front, "Conecta backend no front")
+Rel(front, back, "Conecta front no backend")
+Rel(back, db, "Faz request para o banco")
+Rel(Professor, Sistema, "Publica aulas")
+Rel(Aluno, Sistema, "Assiste aulas")
+Rel(Administracao, Sistema, "Administra")
+Rel(Sistema, back, "Conecta o sistema no back")
+Rel(front, Sistema, "Conecta o front ao sistema")
