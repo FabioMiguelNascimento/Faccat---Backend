@@ -47,37 +47,13 @@ app.get('/precoMedio', (req, res) => {
  * Endpoint /groupByData
  */
 app.get('/group/groupByData', (req, res) => {
-  const groupedByData = {};
-
-  vendas.forEach(({ data, quantidade, precoUnitario }) => {
-    groupedByData[data] = {
-      quantidadeTotal: 0,
-      valorTotal:0
-    }
-
-    groupedByData[data].quantidadeTotal += quantidade;
-    groupedByData[data].valorTotal += precoUnitario;
-    groupedByData[data].precoMedio = Number((groupedByData[data].valorTotal / groupedByData[data].quantidadeTotal).toFixed(2));
-  });
+  const groupedByData = func.agruparPor(vendas, 'data');
   res.json(groupedByData);
 })
 
-
 app.get('/groupByUF', (req, res) => {
-  const groupedUf = {};
-
-  vendas.forEach(({ uf, quantidade, precoUnitario }) => {
-    groupedUf[uf] = {
-      quantidadeTotal: 0,
-      valorTotal:0
-    }
-
-    groupedUf[uf].quantidadeTotal += quantidade;
-    groupedUf[uf].valorTotal += precoUnitario;
-    groupedUf[uf].precoMedio = Number((groupedUf[uf].valorTotal / groupedUf[uf].quantidadeTotal).toFixed(2));
-  });
-
-  res.json(groupedUf);
+  const groupedByUF = func.agruparPor(vendas, 'uf');
+  res.json(groupedByUF);
 })
 
 /**

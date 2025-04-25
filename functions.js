@@ -18,29 +18,28 @@ function calcularPrecoMedio(valorTotal, quantidadeTotal) {
   return quantidadeTotal ?? valorTotal / quantidadeTotal;
 }
 
-// function groupByValue(group, vendas) {
-//   const groupedData = {};
-//   let arr = [];
-//   for(let i = 0; i < vendas.length; i++){
-//     if(arr.includes(vendas[i][group]) == false){
-//       arr.push(vendas[i][group]);
-//     }
-//   }
+function agruparPor(vendas, campo) {
+  const agrupado = {};
 
-//   vendas.forEach(({ quantidade, precoUnitario }, arr) => {
-//     console.log(arr)
-//     arr.forEach(i => {
-//       groupedData[i] = {
-//         quantidadeTotal: 0,
-//         valorTotal:0
-//       }
-  
-//       groupedData[i].quantidadeTotal += quantidade;
-//       groupedData[i].valorTotal += precoUnitario;
-//       groupedData[i].precoMedio = Number((groupedData[i].valorTotal / groupedData[i].quantidadeTotal).toFixed(2));
-//     })
-//   });
-//   return groupedData
-// }
+  vendas.forEach(({ [campo]: valor, quantidade, precoUnitario }) => {
+    if (!agrupado[valor]) {
+      agrupado[valor] = {
+        quantidadeTotal: 0,
+        valorTotal: 0
+      };
+    }
+    
+    agrupado[valor].quantidadeTotal += quantidade;
+    agrupado[valor].valorTotal += quantidade * precoUnitario;
+    agrupado[valor].precoMedio = Number((agrupado[valor].valorTotal / agrupado[valor].quantidadeTotal).toFixed(2));
+  });
 
-export { calcularPrecoMedio, calcularQuantidadeTotal, calcularValorTotal}
+  return agrupado;
+}
+
+module.exports = {
+  calcularPrecoMedio,
+  calcularQuantidadeTotal,
+  calcularValorTotal,
+  agruparPor
+};
